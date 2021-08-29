@@ -8,13 +8,16 @@
         android:label="COVISTOP"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Hackathon">
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
         <activity android:name=".profileedit"></activity>
         <activity android:name=".profile" />
         <activity android:name=".details" />
-        <activity android:name=".signup" />
-        <activity android:name=".login">
+        <activity android:name=".signup"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".login"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -60,7 +60,8 @@ public class details extends AppCompatActivity {
                                 {
 
                                     for (DataSnapshot ds : snapshot.getChildren()) {
-
+                                        String t=snapshot.getValue().toString();
+                                       System.out.println(t);
                                         data up = ds.getValue(data.class);
                                         l.add(up);
                                     }

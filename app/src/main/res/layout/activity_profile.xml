@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/gb"
     android:layout_height="match_parent"
     tools:context=".profile">
 
@@ -13,6 +14,8 @@
         android:layout_marginTop="70dp"
         android:layout_marginBottom="128dp"
         android:text="Edit profile"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/browser_actions_bg_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +29,7 @@
         android:layout_marginLeft="52dp"
         android:layout_marginTop="76dp"
         android:text="Name : "
+        android:textColor="@color/browser_actions_bg_grey"
         android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -38,6 +42,7 @@
         android:layout_marginLeft="28dp"
         android:layout_marginTop="32dp"
         android:text="covid Id : "
+        android:textColor="@color/browser_actions_bg_grey"
         android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -48,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginLeft="44dp"
+        android:textColor="@color/browser_actions_bg_grey"
         android:layout_marginTop="32dp"
         android:text="Phone : "
         android:textSize="30dp"
@@ -62,6 +68,7 @@
         android:layout_marginLeft="56dp"
         android:layout_marginTop="32dp"
         android:text="Email : "
+        android:textColor="@color/browser_actions_bg_grey"
         android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -116,6 +123,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
         android:text="Profile"
+        android:textColor="@color/browser_actions_bg_grey"
         android:textSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
