@@ -1,19 +1,22 @@
 package com.example.hackathon;
 
 
-
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,18 +25,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.WriterException;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
 public class MainActivity extends AppCompatActivity {
+
+    private final String CHid="covid care";
+    private final int Notification_id=1;
+
 
     private DrawerLayout dl;
     private ActionBarDrawerToggle t;
@@ -47,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     Bitmap bitmap;
     QRGEncoder qrgEncoder;
     SharedPreferences sp;
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +73,60 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         qrimg = findViewById(R.id.imageView2);
         introtext=findViewById(R.id.textView3);
+        DatabaseReference  c= FirebaseDatabase.getInstance().getReference("c");
+
+        c.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                String te=snapshot.child("t").getValue().toString();
+                String ox=snapshot.child("o").getValue().toString();
+                Log.d("temperature",te);
+                Log.i("oxygen",ox);
+                Float t=Float.parseFloat(te);
+
+                Float oxygen=Float.parseFloat(ox);
+
+                if(t>=100 || oxygen<=95)
+                {
+                    notification();
+
+                    NotificationCompat.Builder builder=new NotificationCompat.Builder(getApplicationContext(),CHid);
+                    builder.setSmallIcon(R.drawable.ic_baseline_add_alert_24);
+                    builder.setContentTitle("ALERT");
+                    builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.globe));
+                    builder.setContentText("Your temperature and oxygen value is abnormal.");
+                    builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+
+                    NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(getApplicationContext());
+                    notificationManagerCompat.notify(Notification_id,builder.build());
+                }
+
+                else
+                {
+                    notification();
+
+                    NotificationCompat.Builder builder=new NotificationCompat.Builder(getApplicationContext(),CHid);
+                    builder.setSmallIcon(R.drawable.ic_baseline_add_alert_24);
+                    builder.setContentTitle("you are good");
+                    builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.globe));
+                    builder.setContentText("The temperature and oxygen level are normal.");
+                    builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+
+                    NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(getApplicationContext());
+                    notificationManagerCompat.notify(Notification_id,builder.build());
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         qrgen();
 
         dl.addDrawerListener(t);
@@ -129,6 +199,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
     protected void qrgen()
@@ -137,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
         sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         qrimg=findViewById(R.id.imageView2);
         Display display = manager.getDefaultDisplay();
+
 
         // creating a variable for point which
         // is to be displayed in QR Code.
@@ -151,10 +224,12 @@ public class MainActivity extends AppCompatActivity {
         // generating dimension from width and height.
         int dimen = width < height ? width : height;
         dimen = dimen * 3 / 4;
-        String qr = sp.getString("covidid", "hai");
+        String qr = sp.getString("covidid", "m");
         System.out.println("value ="+qr)  ;
         if (qr.isEmpty()) {
+
             Toast.makeText(getApplicationContext(), "Enter the covid id generate QR code", Toast.LENGTH_SHORT).show();
+
         } else {
             // setting this dimensions inside our qr code
             // encoder to generate our qr code.
@@ -173,6 +248,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+
+    private void notification() {
+
+        String des="include simple";
+        CharSequence name="notify";
+
+        int imp= NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel notificationChannel=new NotificationChannel(CHid,name,imp);
+        notificationChannel.setDescription(des);
+
+        NotificationManager notificationManager= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(notificationChannel);
+
+    }
 
 
     @Override

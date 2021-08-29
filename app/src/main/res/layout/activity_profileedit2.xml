@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/gb"
     android:layout_height="match_parent"
     tools:context=".profileedit">
 
@@ -13,6 +14,7 @@
         android:layout_marginTop="136dp"
         android:ems="10"
         android:hint="Enter the name"
+        android:textColorHint="@color/browser_actions_bg_grey"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,6 +27,7 @@
         android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="Enter the covid id"
+        android:textColorHint="@color/browser_actions_bg_grey"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +41,7 @@
         android:ems="10"
         android:hint="Enter the phone number"
         android:inputType="textPersonName"
+        android:textColorHint="@color/browser_actions_bg_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/peetcovidid" />
@@ -48,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:ems="10"
+        android:textColorHint="@color/browser_actions_bg_grey"
         android:hint="Enter the Email id"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,6 +69,8 @@
         android:layout_marginEnd="174dp"
         android:layout_marginRight="174dp"
         android:layout_marginBottom="177dp"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/browser_actions_bg_grey"
         android:text="save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -40,6 +40,7 @@ sp= PreferenceManager.getDefaultSharedPreferences(profileedit.this);
                 e.putString("phonenumber",phonenuber);
                 e.putString("emailid",email);
                 e.commit();
+
                 Toast.makeText(getApplicationContext(),"updated",Toast.LENGTH_SHORT).show();
             }
         });
